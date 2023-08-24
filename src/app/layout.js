@@ -2,7 +2,6 @@ import { APP_NAME, APP_NAME_DOMAIN, SEO, isProdMode } from '@/utils/constants'
 import { Inter } from 'next/font/google'
 import Navbar from './components/navbar'
 import './globals.css'
-import Container from './components/container'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -119,10 +118,8 @@ export default function RootLayout({ children }) {
                 />
                 <meta name="msapplication-TileColor" content="#ffffff" />
             </head>
-            <body className={`text-primary bg-white ${inter.className}`}>
-                <Container>
-                    <Navbar />
-                </Container>
+            <body className={`bg-white text-primary ${inter.className}`}>
+                <Navbar />
                 <main>{children}</main>
             </body>
         </html>

@@ -1,20 +1,4 @@
 {
     "extends": ["eslint:recommended", "next"],
-    "plugins": ["react", "eslint", "react-hooks"],
-    "rules": {
-        "no-use-before-define": "off",
-        "react/jsx-filename-extension": ["warn", { "extensions": [".js"] }],
-        "import/extensions": ["error", "ignorePackages"],
-        "no-shadow": "off",
-
-        "max-len": [
-            "warn",
-            { "code": 100, "ignoreComments": true, "ignoreUrls": true }
-        ],
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "import/prefer-default-export": "off",
-        "react/prop-types": "off",
-        "prettier/prettier": ["error", { "endOfLine": "auto" }]
-    }
+    "plugins": ["react", "react-hooks"]
 }

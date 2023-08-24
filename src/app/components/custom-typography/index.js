@@ -8,8 +8,12 @@ export default function CustomTypography({
 }) {
     const getTypographyClasses = () => {
         switch (variant) {
+            case 'largeHeading':
+                return 'text-center lg:text-5xl text-2xl font-bold'
             case 'heading':
                 return 'text-3xl font-bold'
+            case 'largeSubheading':
+                return 'text-center lg:text-2xl text-base font-normal'
             case 'subheading':
                 return 'text-xl font-medium'
             case 'body':

@@ -1,128 +1,112 @@
 'use client'
-import { AppRoutes } from '@/utils/constants'
+import { AppRoutes, HeaderMenuLinks, MobileMenuLinks } from '@/utils/constants'
+import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import CustomImage from '../custom-image'
 import CustomLink from '../custom-link'
 import CustomTypography from '../custom-typography'
 import Logo from '../logo'
+import AuthButtonsComponent from './auth-buttons'
 
-export default function Navbar({ menuLinks = [] }) {
-    const [open, setOpen] = useState(false)
+const MobileMenuComponent = dynamic(() => import('./mobile-menu'))
+
+export default function Navbar() {
+    const [toggleMobileMenu, setToggleMobileMenu] = useState(false)
     const pathName = usePathname()
 
     const renderLinks = useMemo(() => {
-        return menuLinks && menuLinks.length
-            ? menuLinks.map((item, index) => {
+        return HeaderMenuLinks && HeaderMenuLinks.length
+            ? HeaderMenuLinks.map((item, index) => {
                   const isActive = pathName === item?.url
-                  return (
-                      <CustomLink
-                          key={index}
-                          href={item?.url}
-                          className={`border-primary-white mx-4 py-6 lg:border-0 lg:px-0 lg:py-0 lg:hover:text-indigo-600 ${
-                              index < menuLinks.length - 1 ? 'border-b' : ''
+                  const renderIndicator = (
+                      <div
+                          className={`h-0.5 w-3 rounded-[1px] group-hover:bg-blue ${
+                              isActive ? 'bg-white' : ''
                           }`}
+                      />
+                  )
+                  return item?.url ? (
+                      <CustomLink
+                          key={`${item?.title}-${index}`}
+                          href={item?.url}
+                      >
+                          <div className="inline-flex flex-col items-center justify-center gap-1">
+                              <CustomTypography
+                                  className={`!font-medium text-white`}
+                              >
+                                  {item?.title}
+                              </CustomTypography>
+                              {renderIndicator}
+                          </div>
+                      </CustomLink>
+                  ) : (
+                      <div
+                          key={`${item?.title}-${index}`}
+                          className="group inline-flex cursor-pointer flex-col items-center justify-center gap-1"
                       >
                           <CustomTypography
-                              variant="h6"
-                              className={`${
-                                  isActive
-                                      ? 'lg:border-b-2 lg:border-b-indigo-600 lg:!text-indigo-600'
-                                      : ''
-                              } lg:text-primary text-primary-white border-transparent lg:border-b-2 lg:hover:border-b-indigo-600 lg:hover:text-indigo-600`}
+                              className={`!font-medium text-white`}
                           >
                               {item?.title}
                           </CustomTypography>
-                      </CustomLink>
+
+                          {renderIndicator}
+                      </div>
                   )
               })
             : null
-    }, [menuLinks, pathName])
+    }, [pathName])
 
     return (
-        <nav className="fixed left-0 right-0 top-0 mx-auto h-16">
-            <div className="bg-sky-blue-700 flex w-full items-center justify-between">
-                <div className="flex items-center">
-                    <div
-                        className="relative flex h-[34px] w-[34px] items-center"
-                        onClick={() => setOpen(!open)}
-                    >
-                        <CustomImage
-                            src="/common/ion-menu.svg"
-                            alt={`hamburg-menu`}
-                            priority={true}
-                        />
-                    </div>
-                    <CustomLink
-                        href={AppRoutes.home}
-                        className="relative h-[30px] w-[105px]"
-                    >
-                        <Logo />
-                    </CustomLink>
-                    {/* <div
-                    className={`mx-auto hidden w-auto flex-col space-y-4 font-medium lg:mt-0 lg:flex lg:flex-row lg:space-x-8 lg:space-y-0 lg:border-0`}
+        <nav
+            className="fixed left-0 right-0 top-0 z-[1000] mx-auto flex h-14 w-full items-center justify-between bg-sky-blue-700 px-5 
+        py-3 lg:h-16 lg:px-[30px]"
+        >
+            <div className="flex w-full flex-row-reverse items-center justify-between gap-3 lg:w-auto  lg:flex-row lg:justify-start">
+                <div
+                    className="relative h-5 w-[26px] cursor-pointer lg:mt-[12.5px] lg:h-[34px] lg:w-[34px]"
+                    onClick={() => setToggleMobileMenu(!toggleMobileMenu)}
                 >
-                    {renderLinks}
-                </div> */}
+                    <CustomImage
+                        src="/icons/icon-menu.svg"
+                        alt={`hamburg-menu`}
+                        priority={true}
+                    />
                 </div>
+                <CustomLink
+                    href={AppRoutes.home}
+                    className="relative h-[32px] w-[90px] lg:h-[34px] lg:w-[109px]"
+                >
+                    <Logo className="!object-contain" />
+                </CustomLink>
+            </div>
 
-                <div class="flex items-start justify-center gap-[30px]">
-                    <div class="flex items-center justify-center gap-2.5">
-                        <div class="inline-flex flex-col items-center justify-center gap-1">
-                            <div class="text-base font-medium text-white">
-                                Sell
-                            </div>
-                            <div class="h-0.5 w-3 rounded-[1px] bg-white"></div>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-center gap-2.5">
-                        <div class="inline-flex flex-col items-center justify-center gap-1">
-                            <div class="text-base font-medium text-white">
-                                Buy
-                            </div>
-                            <div class="h-0.5 w-3 rounded-[1px] bg-blue-700"></div>
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-center gap-2.5">
-                        <div class="inline-flex flex-col items-center justify-center gap-1">
-                            <div class="text-base font-medium text-white">
-                                Contact Us
-                            </div>
-                            <div class="h-0.5 w-3 rounded-[1px]"></div>
-                        </div>
-                    </div>
-                </div>
+            <div className="hidden lg:flex lg:items-start lg:justify-center lg:gap-[30px]">
+                {renderLinks}
+            </div>
 
-                <div class=":visibile invisible flex items-center justify-start gap-5">
-                    <div class="flex h-[52px] shrink grow basis-0 items-center justify-between gap-5 py-[5px] pl-[50px] pr-5">
-                        <div class="flex items-center justify-center gap-2.5 px-5 py-2.5">
-                            <div class="inline-flex flex-col items-center justify-center gap-1">
-                                <div class="text-base font-medium text-white">
-                                    Log In
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inline-flex flex-col items-center justify-center rounded-[10px] border border-blue-700 bg-blue-700 px-5 py-2.5">
-                            <div class="text-lg font-medium text-white">
-                                Register
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/* <div
+            <AuthButtonsComponent />
+            {toggleMobileMenu ? (
+                <MobileMenuComponent
+                    menuItems={MobileMenuLinks}
+                    toggleMobileMenu={toggleMobileMenu}
+                    setToggleMobileMenu={setToggleMobileMenu}
+                />
+            ) : null}
+            {/* <div
                 className={`inset-0 z-10 h-screen w-full ${
-                    open ? 'absolute' : 'hidden'
+                    toggleMobileMenu ? 'absolute' : 'hidden'
                 }`}
-                onClick={() => setOpen(!open)}
+                onClick={() => setToggleMobileMenu(!toggleMobileMenu)}
             >
                 <div
-                    className="border-gray 95 absolute top-[72px] flex w-full flex-col justify-between rounded-b-lg 
+                    className="border-gray 95 absolute top-[72px] flex w-full flex-col justify-between rounded-b-lg
         border-b py-1 font-medium shadow-md lg:hidden"
                 >
                     {renderLinks}
                 </div>
             </div> */}
-            </div>
         </nav>
     )
 }

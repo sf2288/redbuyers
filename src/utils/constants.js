@@ -12,12 +12,143 @@ export const AppRoutes = {
     browseHomes: '/browseHomes',
 }
 
-export const MenuLinks = [
+export const HeaderMenuLinks = [
     {
-        title: 'Browse Homes',
-        url: AppRoutes.browseHomes,
+        title: 'Sell',
+        url: AppRoutes.home,
     },
-].filter((item) => !item?.hidden)
+    {
+        title: 'Buy',
+    },
+    {
+        title: 'Contact Us',
+    },
+]
+
+export const MobileMenuLinks = [
+    {
+        title: 'Buy & Sell',
+        subMenu: [
+            {
+                title: 'Sell',
+                url: '',
+            },
+            {
+                title: 'Browse Home',
+                url: AppRoutes.browseHomes,
+            },
+            {
+                title: 'Cash Offer',
+                url: '',
+            },
+            {
+                title: 'Buy',
+                url: '',
+            },
+            {
+                title: 'New Construction',
+                url: '',
+            },
+            {
+                title: 'Pricing',
+                url: '',
+            },
+            {
+                title: 'Down Payment',
+                url: '',
+            },
+        ],
+    },
+    {
+        title: 'Investment',
+        subMenu: [
+            {
+                title: 'Co-Investment',
+                url: '',
+            },
+            {
+                title: 'Partnership Buying',
+                url: '',
+            },
+        ],
+    },
+    {
+        title: 'Company',
+        subMenu: [
+            {
+                title: 'About',
+                url: '',
+            },
+            {
+                title: 'Contact Us',
+                url: '',
+            },
+            {
+                title: 'Vendors',
+                url: '',
+            },
+            {
+                title: 'Careers',
+                url: '',
+            },
+            {
+                title: 'Privacy Policy',
+                url: '',
+            },
+            {
+                title: 'Terms & Conditions',
+                url: '',
+            },
+        ],
+    },
+    {
+        title: 'Learn',
+        subMenu: [
+            {
+                title: 'Seller FAQs',
+                url: '',
+            },
+            {
+                title: 'Buyer FAQs',
+                url: '',
+            },
+            {
+                title: 'Blogs',
+                url: '',
+            },
+            {
+                title: 'Mortgage Calculator',
+                url: '',
+            },
+        ],
+    },
+    {
+        title: 'Location',
+        subMenu: [
+            {
+                title: 'Greater Toronto Area',
+                url: '',
+            },
+            {
+                title: 'Region of Peel',
+                url: '',
+            },
+            {
+                title: 'Region of Hamilton',
+                url: '',
+            },
+            {
+                title: 'Region of Waterloo',
+                url: '',
+            },
+            {
+                title: 'View All Locations',
+                url: '',
+                isAllLocation: true,
+            },
+        ],
+    },
+]
 
 export const SEO = {
     home: {
